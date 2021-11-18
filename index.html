@@ -87,7 +87,11 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+    token: "42a1a09cabca41b6ad97137bb604009a"});
+    
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -95,13 +99,121 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try{
+        if( isNaN(firstNum) == true || isNaN(secondNum)== true){
+          throw new MyError("Invalid Input: At least one of the input is not a number");
+        }
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      } catch(err) {
+        if( err instanceof MyError){
+          console.error(err.name);
+        }
+        else{
+          alert("Invalid Input");
+        }
+      } finally{
+        console.log("Thank you for using my calculator. Have a great day");
+      }
+      
+
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+    errorBtns[0].addEventListener('click', () => {
+      console.log("Console Log clicked");
+    });
+
+    errorBtns[1].addEventListener('click', () => {
+      console.error("Console Error clicked");
+    });
+
+    errorBtns[2].addEventListener('click', () => {
+      console.count("count button clicked");
+    });
+
+    errorBtns[3].addEventListener('click', () => {
+      console.warn('Console Warn clicked');
+    });
+
+    errorBtns[4].addEventListener('click', () => {
+      const number = 2;
+      const errorMsg = 'The number does not equal 3';
+      console.assert(number == 3, {number, errorMsg});
+    });
+
+    errorBtns[5].addEventListener('click', () => {
+      console.clear();
+    });
+
+    errorBtns[6].addEventListener('click', () => {
+      console.dir(document.getElementById('error-btns').children[6]);
+    });
+
+    errorBtns[7].addEventListener('click', () => {
+      console.dirxml(document.getElementById('error-btns').children[7])
+    });
+
+    errorBtns[8].addEventListener('click', () => {
+      const label = 'Console Group';
+      console.group(label);
+    });
+
+    errorBtns[9].addEventListener('click', () => {
+      const label = 'Console Group';
+      console.groupEnd(label);
+    });
+
+
+    errorBtns[10].addEventListener('click', () => {
+      console.table([
+        {
+          title: 'Software Engineering',
+          class: 'CSE 110',
+        },
+        {
+          title: 'Algorithm',
+          class: 'CSE 101',
+        },
+        {
+          title: 'Statistics',
+          class: 'MATH 183',
+        },
+        {
+          title: 'Database',
+          class: 'CSE 132',
+        }
+      ]);
+    });
+
+    errorBtns[11].addEventListener('click', () => {
+      console.time(['Timer']);
+    });
+
+    errorBtns[12].addEventListener('click', () => {
+      console.timeEnd(['Timer']);
+    });
+
+    errorBtns[13].addEventListener('click', () => {
+      const traceDemo = () => { console.trace(); };
+      traceDemo();
+    });
+
+    errorBtns[14].addEventListener('click', () => {
+      globalError();
+    });
+
+
+    class MyError extends Error{
+      constructor(message){
+        super(message);
+        this.name = "At least one of the input is not a number";
+      }
+    }
+
+    
   </script>
 </body>
 
