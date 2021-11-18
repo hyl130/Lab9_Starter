@@ -106,10 +106,12 @@
         output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
       } catch(err) {
         if( err instanceof MyError){
+          alert("At least one of the input is not a number")
           console.error(err.name);
         }
         else{
           alert("Invalid Input");
+          console.error("Invalid Input");
         }
       } finally{
         console.log("Thank you for using my calculator. Have a great day");
