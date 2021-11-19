@@ -100,18 +100,17 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       try{
-        if( isNaN(firstNum) == true || isNaN(secondNum)== true){
-          throw new MyError("Invalid Input: At least one of the input is not a number");
+        if( isNaN(secondNum)== true){
+          throw new SecondInputError("Invalid Input: Check your second input");
         }
         output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
       } catch(err) {
-        if( err instanceof MyError){
+        if( err instanceof SecondInputError){
           alert("Invalid Input")
           console.error(err.name);
         }
         else{
-          alert("Invalid Input");
-          console.error(err);
+          throw err;
         }
       } finally{
         console.log("Thank you for using my calculator. Have a great day");
@@ -208,10 +207,10 @@
     });
 
 
-    class MyError extends Error{
+    class SecondInputError extends Error{
       constructor(message){
         super(message);
-        this.name = "At least one of the input is not a number";
+        this.name = "The second input is not a number";
       }
     }
 
